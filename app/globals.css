@@ -1,0 +1,338 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 220 14.3% 95.9%;
+    --primary-foreground: 220.9 39.3% 11%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.fade-in-on-scroll {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 400ms ease-in-out, transform 400ms ease-in-out;
+}
+
+.fade-in-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Add subtle backdrop filter for better text contrast */
+
+/* Custom animations for QuietLoop - Dramatic Shadow Effects */
+
+@keyframes card-shadow-pulse {
+  0% {
+    box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.1), 0 0 15px 2px rgba(124, 58, 237, 0.15);
+    transform: translateY(-3px);
+  }
+  100% {
+    box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+  }
+}
+
+@keyframes button-shadow-pulse {
+  0% {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.1), 0 0 12px 4px rgba(124, 58, 237, 0.25);
+    transform: translateY(-2px);
+  }
+  100% {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+  }
+}
+
+/* Add custom animations to Tailwind */
+.animate-card-shadow {
+  animation: card-shadow-pulse 3s infinite ease-in-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.animate-card-shadow:hover {
+  animation: none;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 10px 20px -5px rgba(0, 0, 0, 0.1), 0 0 20px 5px rgba(124, 58, 237, 0.2);
+  transform: translateY(-5px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-button-shadow {
+  animation: button-shadow-pulse 4s infinite ease-in-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.animate-button-shadow:hover {
+  animation: none;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.1), 0 0 20px 5px rgba(124, 58, 237, 0.3);
+  transform: translateY(-3px) scale(1.05);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hero-content {
+  backdrop-filter: blur(0.5px);
+}
+
+/* Enhanced button hover effects */
+.enhanced-button-hover {
+  box-shadow: 0 4px 14px rgba(200, 198, 247, 0.3);
+  transition: all 0.3s ease;
+}
+
+.enhanced-button-hover:hover {
+  box-shadow: 0 8px 25px rgba(155, 151, 230, 0.4);
+  border: 1px solid rgba(250, 214, 201, 0.4) !important;
+}
+
+/* Ensure proper contrast for accessibility */
+.text-apricot {
+  color: #e8a882; /* Darker apricot for better contrast */
+}
+
+/* ENHANCED BLOB STYLING - Increased visibility while maintaining elegance */
+.hero-blob-1 {
+  position: absolute;
+  /* Increased opacity from 0.25 to 0.35 for better visibility */
+  background: radial-gradient(
+    ellipse at center,
+    rgba(200, 198, 247, 0.35) 0%,
+    rgba(200, 198, 247, 0.15) 70%,
+    transparent 100%
+  );
+  width: 600px;
+  height: 450px;
+  left: -200px;
+  top: -100px;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  /* Reduced blur for more definition */
+  filter: blur(25px);
+  animation: morphBlob1 30s ease-in-out infinite alternate;
+  animation-delay: 0s;
+  pointer-events: none;
+  will-change: transform, border-radius;
+}
+
+.hero-blob-2 {
+  position: absolute;
+  /* Increased opacity and added gradient for depth */
+  background: radial-gradient(
+    ellipse at center,
+    rgba(165, 163, 232, 0.28) 0%,
+    rgba(165, 163, 232, 0.12) 70%,
+    transparent 100%
+  );
+  width: 500px;
+  height: 375px;
+  right: -150px;
+  top: -50px;
+  border-radius: 40% 60% 70% 30% / 50% 60% 30% 70%;
+  filter: blur(25px);
+  animation: morphBlob2 30s ease-in-out infinite alternate;
+  animation-delay: 3s;
+  pointer-events: none;
+  will-change: transform, border-radius;
+}
+
+.hero-blob-3 {
+  position: absolute;
+  /* Enhanced apricot with better visibility */
+  background: radial-gradient(
+    ellipse at center,
+    rgba(250, 214, 201, 0.28) 0%,
+    rgba(250, 214, 201, 0.12) 70%,
+    transparent 100%
+  );
+  width: 400px;
+  height: 300px;
+  left: -100px;
+  bottom: -50px;
+  border-radius: 70% 30% 50% 50% / 40% 70% 60% 30%;
+  filter: blur(25px);
+  animation: morphBlob3 30s ease-in-out infinite alternate;
+  animation-delay: 6s;
+  pointer-events: none;
+  will-change: transform, border-radius;
+}
+
+.hero-blob-4 {
+  position: absolute;
+  /* Increased opacity for the central blob behind text */
+  background: radial-gradient(
+    ellipse at center,
+    rgba(232, 231, 251, 0.2) 0%,
+    rgba(232, 231, 251, 0.08) 70%,
+    transparent 100%
+  );
+  width: 350px;
+  height: 250px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50% 50% 80% 20% / 60% 40% 80% 20%;
+  filter: blur(25px);
+  animation: morphBlob4 30s ease-in-out infinite alternate;
+  animation-delay: 9s;
+  pointer-events: none;
+  will-change: transform, border-radius;
+}
+
+/* Enhanced responsive adjustments */
+@media (max-width: 768px) {
+  .hero-blob-1 {
+    width: 400px;
+    height: 300px;
+    left: -150px;
+    top: -75px;
+    filter: blur(20px);
+  }
+  .hero-blob-2 {
+    width: 350px;
+    height: 260px;
+    right: -100px;
+    top: -40px;
+    filter: blur(20px);
+  }
+  .hero-blob-3 {
+    width: 300px;
+    height: 225px;
+    left: -75px;
+    bottom: -40px;
+    filter: blur(20px);
+  }
+  .hero-blob-4 {
+    width: 250px;
+    height: 180px;
+    filter: blur(20px);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-blob-1 {
+    width: 300px;
+    height: 225px;
+    left: -100px;
+    top: -50px;
+    filter: blur(15px);
+  }
+  .hero-blob-2 {
+    width: 250px;
+    height: 190px;
+    right: -75px;
+    top: -30px;
+    filter: blur(15px);
+  }
+  .hero-blob-3 {
+    width: 200px;
+    height: 150px;
+    left: -50px;
+    bottom: -30px;
+    filter: blur(15px);
+  }
+  .hero-blob-4 {
+    width: 180px;
+    height: 130px;
+    filter: blur(15px);
+  }
+}
+
+/* Enhanced keyframes with more pronounced morphing */
+@keyframes morphBlob1 {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    transform: scale(1.15) rotate(3deg);
+    border-radius: 40% 60% 50% 50% / 70% 60% 40% 30%;
+  }
+}
+
+@keyframes morphBlob2 {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    border-radius: 40% 60% 70% 30% / 50% 60% 30% 70%;
+  }
+  50% {
+    transform: scale(1.15) rotate(-3deg);
+    border-radius: 60% 40% 30% 70% / 40% 70% 60% 30%;
+  }
+}
+
+@keyframes morphBlob3 {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    border-radius: 70% 30% 50% 50% / 40% 70% 60% 30%;
+  }
+  50% {
+    transform: scale(1.15) rotate(2deg);
+    border-radius: 30% 70% 40% 60% / 70% 30% 50% 50%;
+  }
+}
+
+@keyframes morphBlob4 {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    border-radius: 50% 50% 80% 20% / 60% 40% 80% 20%;
+  }
+  50% {
+    transform: scale(1.15) rotate(-2deg);
+    border-radius: 80% 20% 50% 50% / 40% 60% 20% 80%;
+  }
+}
+
+/* Add subtle glow effect for enhanced visibility */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-blob-1,
+  .hero-blob-2,
+  .hero-blob-3,
+  .hero-blob-4 {
+    transition: filter 0.3s ease;
+  }
+
+  .hero-blob-1:hover,
+  .hero-blob-2:hover,
+  .hero-blob-3:hover,
+  .hero-blob-4:hover {
+    filter: blur(20px) brightness(1.1);
+  }
+}
