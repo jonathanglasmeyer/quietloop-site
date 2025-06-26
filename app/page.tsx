@@ -111,11 +111,8 @@ export default function HomePage() {
             <Link href="/legal" className="text-sm text-foreground/60 hover:text-foreground transition-colors">
               Legal Notice
             </Link>
-            <a href="mailto:contact@quietloop.com" className="text-sm text-foreground/60 hover:text-foreground transition-colors">
+            <a href="mailto:contact@quietloop.dev" className="text-sm text-foreground/60 hover:text-foreground transition-colors">
               Contact
-            </a>
-            <a href="https://github.com/quietloop" className="text-foreground/60 hover:text-foreground transition-colors" aria-label="GitHub">
-              <Github className="h-5 w-5 stroke-1" />
             </a>
           </div>
         </div>

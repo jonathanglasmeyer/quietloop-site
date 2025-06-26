@@ -1,0 +1,3 @@
+- favicon
+- github link correct
+- extension link correct

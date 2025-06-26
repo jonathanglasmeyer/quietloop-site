@@ -35,7 +35,7 @@ export default function LegalPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-serif font-medium mb-4">Contact</h2>
               <p>
-                Email: contact@quietloop.com<br />
+                Email: contact@quietloop.dev<br />
               </p>
             </section>
             
@@ -104,7 +104,7 @@ export default function LegalPage() {
             <Link href="/legal" className="text-sm text-foreground/60 hover:text-foreground transition-colors">
               Legal Notice
             </Link>
-            <a href="mailto:contact@quietloop.com" className="text-sm text-foreground/60 hover:text-foreground transition-colors">
+            <a href="mailto:contact@quietloop.dev" className="text-sm text-foreground/60 hover:text-foreground transition-colors">
               Contact
             </a>
             <a href="https://github.com/quietloop" className="text-foreground/60 hover:text-foreground transition-colors" aria-label="Github">
