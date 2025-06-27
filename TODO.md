@@ -1,3 +1,4 @@
 - favicon
 - github link correct
 - extension link correct
+- mobile performance is shit
