@@ -164,6 +164,9 @@ export default function PrivacyPage() {
             <Link href="/privacy" className="text-sm text-foreground/60 hover:text-foreground transition-colors">
               Privacy
             </Link>
+            <Link href="/terms" className="text-sm text-foreground/60 hover:text-foreground transition-colors">
+              Terms
+            </Link>
             <Link href="/legal" className="text-sm text-foreground/60 hover:text-foreground transition-colors">
               Legal Notice
             </Link>

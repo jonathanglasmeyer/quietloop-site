@@ -101,15 +101,16 @@ export default function LegalPage() {
             <Link href="/privacy" className="text-sm text-foreground/60 hover:text-foreground transition-colors">
               Privacy
             </Link>
+            <Link href="/terms" className="text-sm text-foreground/60 hover:text-foreground transition-colors">
+              Terms
+            </Link>
             <Link href="/legal" className="text-sm text-foreground/60 hover:text-foreground transition-colors">
               Legal Notice
             </Link>
             <a href="mailto:contact@quietloop.dev" className="text-sm text-foreground/60 hover:text-foreground transition-colors">
               Contact
             </a>
-            <a href="https://github.com/quietloop" className="text-foreground/60 hover:text-foreground transition-colors" aria-label="Github">
-              <Github className="h-5 w-5 stroke-1" />
-            </a>
+            
           </div>
         </div>
       </footer>
