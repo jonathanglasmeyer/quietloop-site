@@ -64,10 +64,12 @@ export default function TermsPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-serif font-medium mb-4">4. Prices & Payment</h2>
               <p>
-                Prices are shown in EUR and include applicable VAT.
+                Prices are shown in EUR and include applicable VAT. Payments are processed exclusively by Stripe, Inc. 
+                We never see or store your full payment data.
               </p>
               <p>
-                Payments are processed exclusively by Stripe, Inc. We never see or store your full payment data.
+                Contract formation follows Stripe’s checkout steps: product selection → payment details → ‘Pay’ button. 
+            
               </p>
               <p>
                 A purchase constitutes a binding contract once Stripe confirms payment.
@@ -104,10 +106,7 @@ export default function TermsPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-serif font-medium mb-4">8. Limitation of Liability</h2>
               <p>
-                We are liable without limitation for intent and gross negligence.
-              </p>
-              <p>
-                For simple negligence we are liable only for foreseeable damages typical for this type of contract.
+                We are liable without limitation for intent and gross negligence. For simple negligence, we are liable only for foreseeable damages typical for this type of contract. Liability for injury to life, body or health remains unaffected.
               </p>
               <p>
                 The Service provides educational insights; we do not guarantee any tournament results or rating improvements.
@@ -136,7 +135,14 @@ export default function TermsPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-serif font-medium mb-4">12. Severability</h2>
+              <h2 className="text-2xl font-serif font-medium mb-4">12. Contract Language & Availability</h2>
+              <p>
+                Contract language is English (German version on request). These Terms are stored by us but not individually saved for you; you can print or save this page at any time.
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-serif font-medium mb-4">13. Severability</h2>
               <p>
                 If any provision is invalid, the remaining provisions remain in full force.
               </p>
