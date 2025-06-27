@@ -127,18 +127,26 @@ export default function PrivacyPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-serif font-medium mb-4">7. Your Rights</h2>
+              <h2 className="text-2xl font-serif font-medium mb-4">7. Data Security</h2>
+              <p>
+                All data transmissions between the Chrome Extension, our servers, and third-party providers (such as Stripe and Supabase) are encrypted using HTTPS (TLS encryption).
+              </p>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-serif font-medium mb-4">8. Your Rights</h2>
               <p className="mb-4">You have the right to:</p>
               <ul className="list-disc pl-5 space-y-2 mb-4">
                 <li>Request information about your stored personal data.</li>
-                <li>Request correction or deletion of your data.</li>
+                <li>Request correction of your data.</li>
+                <li>Request the deletion of your account and all associated personal data by contacting us at contact@quietloop.dev. Your data will be permanently deleted without undue delay.</li>
                 <li>Withdraw your consent at any time, where applicable.</li>
                 <li>File a complaint with the competent supervisory authority.</li>
               </ul>
             </section>
             
             <section className="mb-8">
-              <h2 className="text-2xl font-serif font-medium mb-4">8. Contact</h2>
+              <h2 className="text-2xl font-serif font-medium mb-4">9. Contact</h2>
               <p>
                 If you have questions about privacy or data protection, you can contact:<br />
                 contact@quietloop.dev
