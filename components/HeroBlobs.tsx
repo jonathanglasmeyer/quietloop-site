@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 // Viel komplexere, unregelmäßigere SVG-Pfade für wirklich interessante Formen
@@ -15,7 +17,26 @@ const blobPaths = [
   "M151.7,-117.2C188.9,-69.5,208.3,-6,196,50.6C183.7,107.3,139.7,157.2,84.1,183.9C28.5,210.6,-38.8,214.2,-87.4,188.1C-136.1,162,-166.2,106.3,-178.3,46.2C-190.5,-14,-184.8,-78.6,-152,-131.5C-119.1,-184.4,-59.6,-225.7,-0.3,-225.5C58.9,-225.3,114.5,-164.9,151.7,-117.2Z"
 ];
 
+const useMediaQuery = (query: string) => {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    if (media.matches !== matches) {
+      setMatches(media.matches);
+    }
+    const listener = () => {
+      setMatches(media.matches);
+    };
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, [matches, query]);
+
+  return matches;
+};
+
 const HeroBlobs: React.FC = () => {
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
   return (
     <div className="fixed inset-0 w-full h-screen overflow-visible z-0 opacity-45" aria-hidden="true">
       {/* SVG Definitionen für Gradienten */}
@@ -45,13 +66,13 @@ const HeroBlobs: React.FC = () => {
         className="absolute top-[10%] left-[5%] w-auto h-auto z-0 overflow-visible"
         style={{ minWidth: '500px', minHeight: '500px' }}
         initial={{ scale: 0.8, opacity: 0, x: 0, y: 0 }}
-        animate={{ 
+        animate={isDesktop ? { 
           scale: 1, 
           opacity: 0.6,
           x: [0, 50, -30, 70, 20, 0],
           y: [0, -30, 40, 10, -20, 0]
-        }}
-        transition={{ 
+        } : { scale: 1, opacity: 0.6 }}
+        transition={isDesktop ? { 
           duration: 2, 
           ease: "easeOut",
           x: {
@@ -68,7 +89,7 @@ const HeroBlobs: React.FC = () => {
             ease: "easeInOut",
             times: [0, 0.2, 0.4, 0.6, 0.8, 1]
           }
-        }}
+        } : { duration: 0 }}
       >
         <motion.svg
           viewBox="-300 -300 600 600"
@@ -84,17 +105,17 @@ const HeroBlobs: React.FC = () => {
             fill="url(#lavenderGradient)"
             d={blobPaths[0]}
             animate={{
-              d: [blobPaths[0], blobPaths[1], blobPaths[2], blobPaths[3], blobPaths[4], blobPaths[0]],
-              rotate: [0, 10, 4, 15, 7, 0],
-              scale: [1, 1.15, 1.08, 1.12, 1.05, 1],
+              d: isDesktop ? [blobPaths[0], blobPaths[1], blobPaths[2], blobPaths[3], blobPaths[4], blobPaths[0]] : blobPaths[0],
+              rotate: isDesktop ? [0, 10, 4, 15, 7, 0] : 0,
+              scale: isDesktop ? [1, 1.15, 1.08, 1.12, 1.05, 1] : 1,
             }}
-            transition={{
+            transition={isDesktop ? {
               repeat: Infinity,
               repeatType: "loop",
               duration: 70,
               ease: "easeInOut",
               times: [0, 0.2, 0.4, 0.6, 0.8, 1]
-            }}
+            } : { duration: 0 }}
           />
         </motion.svg>
       </motion.div>
@@ -104,13 +125,13 @@ const HeroBlobs: React.FC = () => {
         className="absolute top-[15%] right-[5%] w-auto h-auto z-0 overflow-visible"
         style={{ minWidth: '450px', minHeight: '450px' }}
         initial={{ scale: 0.8, opacity: 0, x: 0, y: 0 }}
-        animate={{ 
+        animate={isDesktop ? { 
           scale: 1, 
           opacity: 0.6,
           x: [0, -60, -20, -80, -30, 0],
           y: [0, -20, 50, 0, -40, 0]
-        }}
-        transition={{ 
+        } : { scale: 1, opacity: 0.6 }}
+        transition={isDesktop ? { 
           duration: 2, 
           delay: 0.3, 
           ease: "easeOut",
@@ -128,7 +149,7 @@ const HeroBlobs: React.FC = () => {
             ease: "easeInOut",
             times: [0, 0.2, 0.4, 0.6, 0.8, 1]
           }
-        }}
+        } : { duration: 0 }}
       >
         <motion.svg
           viewBox="-300 -300 600 600"
@@ -144,17 +165,17 @@ const HeroBlobs: React.FC = () => {
             fill="url(#deepLavenderGradient)"
             d={blobPaths[1]}
             animate={{
-              d: [blobPaths[1], blobPaths[2], blobPaths[3], blobPaths[4], blobPaths[0], blobPaths[1]],
-              rotate: [0, -8, -12, -5, -10, 0],
-              scale: [1, 1.12, 1.16, 1.08, 1.14, 1],
+              d: isDesktop ? [blobPaths[1], blobPaths[2], blobPaths[3], blobPaths[4], blobPaths[0], blobPaths[1]] : blobPaths[1],
+              rotate: isDesktop ? [0, -8, -12, -5, -10, 0] : 0,
+              scale: isDesktop ? [1, 1.12, 1.16, 1.08, 1.14, 1] : 1,
             }}
-            transition={{
+            transition={isDesktop ? {
               repeat: Infinity,
               repeatType: "loop",
               duration: 80,
               ease: "easeInOut",
               times: [0, 0.2, 0.4, 0.6, 0.8, 1]
-            }}
+            } : { duration: 0 }}
           />
         </motion.svg>
       </motion.div>
@@ -164,13 +185,13 @@ const HeroBlobs: React.FC = () => {
         className="absolute bottom-[5%] left-[10%] w-auto h-auto z-0 overflow-visible"
         style={{ minWidth: '450px', minHeight: '450px' }}
         initial={{ scale: 0.8, opacity: 0, x: 0, y: 0 }}
-        animate={{ 
+        animate={isDesktop ? { 
           scale: 1, 
           opacity: 0.6,
           x: [0, 40, -50, 20, 70, 0],
           y: [0, 30, -20, 60, 10, 0]
-        }}
-        transition={{ 
+        } : { scale: 1, opacity: 0.6 }}
+        transition={isDesktop ? { 
           duration: 2, 
           delay: 0.6, 
           ease: "easeOut",
@@ -188,7 +209,7 @@ const HeroBlobs: React.FC = () => {
             ease: "easeInOut",
             times: [0, 0.2, 0.4, 0.6, 0.8, 1]
           }
-        }}
+        } : { duration: 0 }}
       >
         <motion.svg
           viewBox="-300 -300 600 600"
@@ -204,17 +225,17 @@ const HeroBlobs: React.FC = () => {
             fill="url(#apricotGradient)"
             d={blobPaths[2]}
             animate={{
-              d: [blobPaths[2], blobPaths[3], blobPaths[4], blobPaths[0], blobPaths[1], blobPaths[2]],
-              rotate: [0, 12, 5, 15, 3, 0],
-              scale: [1, 1.14, 1.08, 1.16, 1.05, 1],
+              d: isDesktop ? [blobPaths[2], blobPaths[3], blobPaths[4], blobPaths[0], blobPaths[1], blobPaths[2]] : blobPaths[2],
+              rotate: isDesktop ? [0, 12, 5, 15, 3, 0] : 0,
+              scale: isDesktop ? [1, 1.14, 1.08, 1.16, 1.05, 1] : 1,
             }}
-            transition={{
+            transition={isDesktop ? {
               repeat: Infinity,
               repeatType: "loop",
               duration: 75,
               ease: "easeInOut",
               times: [0, 0.2, 0.4, 0.6, 0.8, 1]
-            }}
+            } : { duration: 0 }}
           />
         </motion.svg>
       </motion.div>
@@ -224,13 +245,13 @@ const HeroBlobs: React.FC = () => {
         className="absolute bottom-[2%] right-[10%] w-auto h-auto z-0 overflow-visible"
         style={{ minWidth: '480px', minHeight: '480px' }}
         initial={{ scale: 0.8, opacity: 0, x: 0, y: 0 }}
-        animate={{ 
+        animate={isDesktop ? { 
           scale: 1, 
           opacity: 0.6,
           x: [0, -50, -10, -70, -30, 0],
           y: [0, 40, -30, 10, 50, 0]
-        }}
-        transition={{ 
+        } : { scale: 1, opacity: 0.6 }}
+        transition={isDesktop ? { 
           duration: 2, 
           delay: 0.9, 
           ease: "easeOut",
@@ -248,7 +269,7 @@ const HeroBlobs: React.FC = () => {
             ease: "easeInOut",
             times: [0, 0.2, 0.4, 0.6, 0.8, 1]
           }
-        }}
+        } : { duration: 0 }}
       >
         <motion.svg
           viewBox="-300 -300 600 600"
@@ -264,17 +285,17 @@ const HeroBlobs: React.FC = () => {
             fill="url(#paleLavenderGradient)"
             d={blobPaths[3]}
             animate={{
-              d: [blobPaths[3], blobPaths[4], blobPaths[0], blobPaths[1], blobPaths[2], blobPaths[3]],
-              rotate: [0, -10, -6, -14, -4, 0],
-              scale: [1, 1.1, 1.15, 1.06, 1.12, 1],
+              d: isDesktop ? [blobPaths[3], blobPaths[4], blobPaths[0], blobPaths[1], blobPaths[2], blobPaths[3]] : blobPaths[3],
+              rotate: isDesktop ? [0, -10, -6, -14, -4, 0] : 0,
+              scale: isDesktop ? [1, 1.1, 1.15, 1.06, 1.12, 1] : 1,
             }}
-            transition={{
+            transition={isDesktop ? {
               repeat: Infinity,
               repeatType: "loop",
               duration: 85,
               ease: "easeInOut",
               times: [0, 0.2, 0.4, 0.6, 0.8, 1]
-            }}
+            } : { duration: 0 }}
           />
         </motion.svg>
       </motion.div>
@@ -284,13 +305,13 @@ const HeroBlobs: React.FC = () => {
         className="absolute top-[55%] left-[15%] w-auto h-auto z-0 overflow-visible"
         style={{ minWidth: '500px', minHeight: '500px' }}
         initial={{ scale: 0.8, opacity: 0, x: 0, y: 0 }}
-        animate={{ 
+        animate={isDesktop ? { 
           scale: 1, 
           opacity: 0.6,
           x: [0, 60, -20, 40, 10, 0],
           y: [0, -20, 30, -10, -30, 0]
-        }}
-        transition={{ 
+        } : { scale: 1, opacity: 0.6 }}
+        transition={isDesktop ? { 
           duration: 2, 
           delay: 0.5, 
           ease: "easeOut",
@@ -308,7 +329,7 @@ const HeroBlobs: React.FC = () => {
             ease: "easeInOut",
             times: [0, 0.2, 0.4, 0.6, 0.8, 1]
           }
-        }}
+        } : { duration: 0 }}
       >
         <motion.svg
           viewBox="-300 -300 600 600"
@@ -324,17 +345,17 @@ const HeroBlobs: React.FC = () => {
             fill="url(#lavenderGradient)"
             d={blobPaths[4]}
             animate={{
-              d: [blobPaths[4], blobPaths[0], blobPaths[1], blobPaths[2], blobPaths[3], blobPaths[4]],
-              rotate: [0, 8, 15, 5, 12, 0],
-              scale: [1, 1.12, 1.05, 1.14, 1.08, 1],
+              d: isDesktop ? [blobPaths[4], blobPaths[0], blobPaths[1], blobPaths[2], blobPaths[3], blobPaths[4]] : blobPaths[4],
+              rotate: isDesktop ? [0, 8, 15, 5, 12, 0] : 0,
+              scale: isDesktop ? [1, 1.12, 1.05, 1.14, 1.08, 1] : 1,
             }}
-            transition={{
+            transition={isDesktop ? {
               repeat: Infinity,
               repeatType: "loop",
               duration: 78,
               ease: "easeInOut",
               times: [0, 0.2, 0.4, 0.6, 0.8, 1]
-            }}
+            } : { duration: 0 }}
           />
         </motion.svg>
       </motion.div>
@@ -344,13 +365,13 @@ const HeroBlobs: React.FC = () => {
         className="absolute top-[70%] right-[12%] w-auto h-auto z-0 overflow-visible"
         style={{ minWidth: '520px', minHeight: '520px' }}
         initial={{ scale: 0.8, opacity: 0, x: 0, y: 0 }}
-        animate={{ 
+        animate={isDesktop ? { 
           scale: 1, 
           opacity: 0.6,
           x: [0, -40, -15, -55, -25, 0],
           y: [0, 25, -40, 15, 30, 0]
-        }}
-        transition={{ 
+        } : { scale: 1, opacity: 0.6 }}
+        transition={isDesktop ? { 
           duration: 2, 
           delay: 0.7, 
           ease: "easeOut",
@@ -368,7 +389,7 @@ const HeroBlobs: React.FC = () => {
             ease: "easeInOut",
             times: [0, 0.2, 0.4, 0.6, 0.8, 1]
           }
-        }}
+        } : { duration: 0 }}
       >
         <motion.svg
           viewBox="-300 -300 600 600"
@@ -384,17 +405,17 @@ const HeroBlobs: React.FC = () => {
             fill="url(#apricotGradient)"
             d={blobPaths[3]}
             animate={{
-              d: [blobPaths[3], blobPaths[4], blobPaths[0], blobPaths[1], blobPaths[2], blobPaths[3]],
-              rotate: [0, -7, -14, -4, -9, 0],
-              scale: [1, 1.08, 1.15, 1.06, 1.1, 1],
+              d: isDesktop ? [blobPaths[3], blobPaths[4], blobPaths[0], blobPaths[1], blobPaths[2], blobPaths[3]] : blobPaths[3],
+              rotate: isDesktop ? [0, -7, -14, -4, -9, 0] : 0,
+              scale: isDesktop ? [1, 1.08, 1.15, 1.06, 1.1, 1] : 1,
             }}
-            transition={{
+            transition={isDesktop ? {
               repeat: Infinity,
               repeatType: "loop",
               duration: 82,
               ease: "easeInOut",
               times: [0, 0.2, 0.4, 0.6, 0.8, 1]
-            }}
+            } : { duration: 0 }}
           />
         </motion.svg>
       </motion.div>

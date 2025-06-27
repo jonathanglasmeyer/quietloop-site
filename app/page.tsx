@@ -47,7 +47,7 @@ export default function HomePage() {
       
       {/* ───────────────── Sticky Nav ───────────────── */}
       <nav className="sticky top-0 z-50 bg-background/65 backdrop-blur border-b border-grey/30">
-        <div className="max-w-4xl mx-auto flex items-center justify-between px-6 pl-0 py-4">
+        <div className="max-w-4xl mx-auto flex items-center justify-between px-6 pl-4 lg:pl-0 py-4">
           <span className="font-serif font-bold text-xl">Quietloop</span>
 
          
