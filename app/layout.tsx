@@ -38,6 +38,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+      <head>
+        <script
+          src="https://cdn.databuddy.cc/databuddy.js"
+          data-client-id="L7QNcbum2IVpr4iiWpBqK"
+          data-track-outgoing-links="true"
+          data-track-engagement="true"
+          data-track-scroll-depth="true"
+          data-track-exit-intent="true"
+          data-track-bounce-rate="true"
+          data-track-web-vitals="true"
+          data-track-errors="true"
+          data-enable-batching="true"
+          crossOrigin="anonymous"
+          async
+        ></script>
+      </head>
       <body className="font-sans bg-background text-foreground antialiased">{children}</body>
     </html>
   )
