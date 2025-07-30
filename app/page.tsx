@@ -68,8 +68,12 @@ export default function HomePage() {
               </h1>
             </div>
             
-              <p className="text-lg md:text-xl text-foreground/70 mt-4 leading-relaxed">
-                I have a soft spot for well-crafted, carefully made apps.<br></br>You'll find all my work here.
+              <p className="text-lg md:text-xl text-foreground/70 mt-4 leading-relaxed mb-2">
+              I'm Senior PM at <a href="https://moia.io/" target="_blank" rel="noopener noreferrer" className="text-foreground/80 hover:text-foreground hover:underline">MOIA</a> by day, indie dev by night.
+              </p>
+              
+              <p className="text-lg md:text-xl text-foreground/70 leading-relaxed">
+              This is a portfolio of the apps and experiments I'm building solo.
               </p>
               
               <a href="#products">
