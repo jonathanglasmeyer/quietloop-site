@@ -93,6 +93,7 @@ export default function HomePage() {
             description="Chrome extension delivering intelligent chess insights and post-game analysis."
             placeholder="Extension Screenshot"
             accentColor="primary-vibrant"
+            link="https://chromewebstore.google.com/detail/ai-analysis-for-lichess/jempiiikmmcmijljkmhjhlmdblghmche?authuser=0&hl=en"
           />
          
           </div>
@@ -148,12 +149,14 @@ function ProductCard({
   description,
   placeholder,
   accentColor = "primary",
+  link,
 }: {
   icon: typeof Sparkles
   title: string
   description: string
   placeholder: string
   accentColor?: string
+  link?: string
 }) {
   return (
     <div className="card-container">
@@ -189,9 +192,17 @@ function ProductCard({
           </div>
           <p className="mb-6 text-body text-text-secondary">{description}</p>
           
-          <Button className="glowy-button mt-8 rounded-full px-6" size="lg">
-            Try it out
-          </Button>
+          {link ? (
+            <a href={link} target="_blank" rel="noopener noreferrer">
+              <Button className="glowy-button mt-8 rounded-full px-6" size="lg">
+                Try it out
+              </Button>
+            </a>
+          ) : (
+            <Button className="glowy-button mt-8 rounded-full px-6" size="lg">
+              Try it out
+            </Button>
+          )}
         </CardContent>
       </Card>
     </div>
