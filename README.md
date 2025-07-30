@@ -6,6 +6,10 @@ Portfolio website for Quietloop, a solo development studio showcasing personal p
 
 https://quietloop.dev
 
+## Analytics
+
+This site uses [DataBuddy](https://databuddy.cc) for analytics and performance monitoring. View the analytics dashboard at [app.databuddy.cc](https://app.databuddy.cc/websites/L7QNcbum2IVpr4iiWpBqK).
+
 ## Quick Start
 
 ```bash
