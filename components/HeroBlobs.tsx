@@ -3,20 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-// Viel komplexere, unregelmäßigere SVG-Pfade für wirklich interessante Formen
-const blobPaths = [
-  // Komplexere Form 1 - stark asymmetrisch
-  "M170.4,-117.9C221.9,-57.3,265.7,13.7,250.7,70.6C235.7,127.6,161.8,170.6,95.3,177.2C28.8,183.8,-30.2,154,-89.9,115.3C-149.5,76.6,-209.8,29,-220.4,-29.8C-231,-88.7,-192,-158.8,-138.1,-217.9C-84.3,-277.1,-15.5,-325.2,30.5,-347C76.5,-368.8,118.9,-178.4,170.4,-117.9Z",
-  // Komplexere Form 2 - mit tiefen Einbuchtungen
-  "M135.3,-101.8C178.4,-44.2,219.3,19.8,209.8,78.1C200.2,136.4,140.2,189.1,71.3,210.8C2.4,232.5,-75.4,223,-129,181.7C-182.6,140.3,-211.9,67.2,-210.4,-0.8C-208.8,-68.9,-176.3,-131.9,-126.4,-188C-76.4,-244.1,-8.9,-293.3,30.3,-284.5C69.5,-275.6,92.3,-159.3,135.3,-101.8Z",
-  // Komplexere Form 3 - mit Ausstülpungen
-  "M79.4,-55.9C105.7,-25.4,131.7,9.2,131.8,48C131.9,86.8,106.2,129.9,70.3,144.4C34.5,159,-11.5,145.1,-58.8,126C-106,106.8,-154.5,82.4,-173.1,41.4C-191.8,0.4,-180.6,-57.1,-151.8,-88.8C-122.9,-120.6,-76.4,-126.5,-38.2,-119.5C0,-112.5,53.1,-86.4,79.4,-55.9Z",
-  // Komplexere Form 4 - stark zerklüftet
-  "M86.8,-61.1C115.2,-31.1,143.1,5.1,142.1,42.9C141.1,80.7,111.3,120.1,74.9,134.8C38.5,149.5,-4.6,139.6,-52,123.6C-99.5,107.6,-151.4,85.5,-166.8,47.3C-182.2,9,-161,-45.4,-129.8,-79C-98.7,-112.7,-57.6,-125.7,-19.3,-119.9C18.9,-114.1,58.5,-91.1,86.8,-61.1Z",
-  // Komplexere Form 5 - extrem unregelmäßig
-  "M151.7,-117.2C188.9,-69.5,208.3,-6,196,50.6C183.7,107.3,139.7,157.2,84.1,183.9C28.5,210.6,-38.8,214.2,-87.4,188.1C-136.1,162,-166.2,106.3,-178.3,46.2C-190.5,-14,-184.8,-78.6,-152,-131.5C-119.1,-184.4,-59.6,-225.7,-0.3,-225.5C58.9,-225.3,114.5,-164.9,151.7,-117.2Z"
-];
-
 const useMediaQuery = (query: string) => {
   const [matches, setMatches] = useState(false);
 
@@ -35,8 +21,25 @@ const useMediaQuery = (query: string) => {
   return matches;
 };
 
+const useReducedMotion = () => {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(media.matches);
+    
+    const listener = () => setPrefersReducedMotion(media.matches);
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, []);
+
+  return prefersReducedMotion;
+};
+
 const HeroBlobs: React.FC = () => {
   const isDesktop = useMediaQuery('(min-width: 1024px)');
+  const prefersReducedMotion = useReducedMotion();
+  
   return (
     <div className="fixed inset-0 w-full h-screen overflow-visible z-0 opacity-45" aria-hidden="true">
       {/* SVG Definitionen für Gradienten */}
@@ -61,60 +64,66 @@ const HeroBlobs: React.FC = () => {
         </defs>
       </svg>
 
-      {/* Blob 1 - Lavender, top-left - mit interessanter Form */}
+      {/* Blob 1 - Lavender, top-left */}
       <motion.div
         className="absolute top-[10%] left-[5%] w-auto h-auto z-0 overflow-visible"
-        style={{ minWidth: '500px', minHeight: '500px' }}
-        initial={{ scale: 0.8, opacity: 0, x: 0, y: 0 }}
-        animate={isDesktop ? { 
+        style={{ 
+          minWidth: '500px', 
+          minHeight: '500px',
+          willChange: 'transform',
+          transform: 'translate3d(0,0,0)'
+        }}
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={!prefersReducedMotion && isDesktop ? { 
           scale: 1, 
           opacity: 0.6,
-          x: [0, 50, -30, 70, 20, 0],
-          y: [0, -30, 40, 10, -20, 0]
+          x: [0, 30, -20, 0],
+          y: [0, -20, 25, 0]
         } : { scale: 1, opacity: 0.6 }}
-        transition={isDesktop ? { 
-          duration: 2, 
+        transition={!prefersReducedMotion && isDesktop ? { 
+          duration: 1.5, 
           ease: "easeOut",
           x: {
             repeat: Infinity,
             repeatType: "mirror",
-            duration: 120,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+            duration: 25,
+            ease: "easeInOut"
           },
           y: {
             repeat: Infinity,
-            repeatType: "mirror",
-            duration: 140,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+            repeatType: "mirror", 
+            duration: 30,
+            ease: "easeInOut"
           }
-        } : { duration: 0 }}
+        } : { duration: 0.8 }}
       >
         <motion.svg
-          viewBox="-300 -300 600 600"
+          viewBox="-200 -200 400 400"
           xmlns="http://www.w3.org/2000/svg"
           width="100%"
           height="100%"
           style={{ 
             overflow: 'visible',
-            filter: "blur(6px) drop-shadow(0 0 25px rgba(209, 207, 255, 0.55))" 
+            filter: "blur(3px) drop-shadow(0 0 15px rgba(209, 207, 255, 0.4))",
+            willChange: 'transform'
           }}
         >
           <motion.path
             fill="url(#lavenderGradient)"
-            d={blobPaths[0]}
-            animate={{
-              d: isDesktop ? [blobPaths[0], blobPaths[1], blobPaths[2], blobPaths[3], blobPaths[4], blobPaths[0]] : blobPaths[0],
-              rotate: isDesktop ? [0, 10, 4, 15, 7, 0] : 0,
-              scale: isDesktop ? [1, 1.15, 1.08, 1.12, 1.05, 1] : 1,
-            }}
-            transition={isDesktop ? {
+            d="M120,-80C150,-40,170,10,160,50C150,90,110,120,60,130C10,140,-50,130,-90,100C-130,70,-150,20,-140,-30C-130,-80,-90,-130,-40,-150C10,-170,80,-120,120,-80Z"
+            animate={!prefersReducedMotion && isDesktop ? {
+              d: [
+                "M120,-80C150,-40,170,10,160,50C150,90,110,120,60,130C10,140,-50,130,-90,100C-130,70,-150,20,-140,-30C-130,-80,-90,-130,-40,-150C10,-170,80,-120,120,-80Z",
+                "M140,-90C170,-50,180,0,170,40C160,80,120,110,70,120C20,130,-40,120,-80,90C-120,60,-140,10,-130,-40C-120,-90,-80,-140,-30,-160C20,-180,110,-130,140,-90Z",
+                "M120,-80C150,-40,170,10,160,50C150,90,110,120,60,130C10,140,-50,130,-90,100C-130,70,-150,20,-140,-30C-130,-80,-90,-130,-40,-150C10,-170,80,-120,120,-80Z"
+              ],
+              rotate: [0, 5, 0]
+            } : {}}
+            transition={!prefersReducedMotion && isDesktop ? {
               repeat: Infinity,
               repeatType: "loop",
-              duration: 70,
-              ease: "easeInOut",
-              times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+              duration: 20,
+              ease: "easeInOut"
             } : { duration: 0 }}
           />
         </motion.svg>
@@ -123,58 +132,64 @@ const HeroBlobs: React.FC = () => {
       {/* Blob 2 - Deep Lavender, top-right */}
       <motion.div
         className="absolute top-[15%] right-[5%] w-auto h-auto z-0 overflow-visible"
-        style={{ minWidth: '450px', minHeight: '450px' }}
-        initial={{ scale: 0.8, opacity: 0, x: 0, y: 0 }}
-        animate={isDesktop ? { 
+        style={{ 
+          minWidth: '450px', 
+          minHeight: '450px',
+          willChange: 'transform',
+          transform: 'translate3d(0,0,0)'
+        }}
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={!prefersReducedMotion && isDesktop ? { 
           scale: 1, 
           opacity: 0.6,
-          x: [0, -60, -20, -80, -30, 0],
-          y: [0, -20, 50, 0, -40, 0]
+          x: [0, -40, -15, 0],
+          y: [0, -15, 35, 0]
         } : { scale: 1, opacity: 0.6 }}
-        transition={isDesktop ? { 
-          duration: 2, 
-          delay: 0.3, 
+        transition={!prefersReducedMotion && isDesktop ? { 
+          duration: 1.5, 
+          delay: 0.2,
           ease: "easeOut",
           x: {
             repeat: Infinity,
             repeatType: "mirror",
-            duration: 130,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+            duration: 28,
+            ease: "easeInOut"
           },
           y: {
             repeat: Infinity,
             repeatType: "mirror",
-            duration: 110,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+            duration: 32,
+            ease: "easeInOut"
           }
-        } : { duration: 0 }}
+        } : { duration: 0.8 }}
       >
         <motion.svg
-          viewBox="-300 -300 600 600"
+          viewBox="-200 -200 400 400"
           xmlns="http://www.w3.org/2000/svg"
           width="100%"
           height="100%"
           style={{ 
             overflow: 'visible',
-            filter: "blur(6px) drop-shadow(0 0 25px rgba(180, 178, 248, 0.55))" 
+            filter: "blur(3px) drop-shadow(0 0 15px rgba(180, 178, 248, 0.4))",
+            willChange: 'transform'
           }}
         >
           <motion.path
             fill="url(#deepLavenderGradient)"
-            d={blobPaths[1]}
-            animate={{
-              d: isDesktop ? [blobPaths[1], blobPaths[2], blobPaths[3], blobPaths[4], blobPaths[0], blobPaths[1]] : blobPaths[1],
-              rotate: isDesktop ? [0, -8, -12, -5, -10, 0] : 0,
-              scale: isDesktop ? [1, 1.12, 1.16, 1.08, 1.14, 1] : 1,
-            }}
-            transition={isDesktop ? {
+            d="M110,-70C140,-30,160,20,150,60C140,100,100,130,50,140C0,150,-60,140,-100,110C-140,80,-160,30,-150,-20C-140,-70,-100,-120,-50,-140C0,-160,80,-110,110,-70Z"
+            animate={!prefersReducedMotion && isDesktop ? {
+              d: [
+                "M110,-70C140,-30,160,20,150,60C140,100,100,130,50,140C0,150,-60,140,-100,110C-140,80,-160,30,-150,-20C-140,-70,-100,-120,-50,-140C0,-160,80,-110,110,-70Z",
+                "M130,-85C155,-45,170,5,160,45C150,85,115,115,65,125C15,135,-45,125,-85,95C-125,65,-145,15,-135,-35C-125,-85,-85,-135,-35,-155C15,-175,105,-125,130,-85Z",
+                "M110,-70C140,-30,160,20,150,60C140,100,100,130,50,140C0,150,-60,140,-100,110C-140,80,-160,30,-150,-20C-140,-70,-100,-120,-50,-140C0,-160,80,-110,110,-70Z"
+              ],
+              rotate: [0, -6, 0]
+            } : {}}
+            transition={!prefersReducedMotion && isDesktop ? {
               repeat: Infinity,
               repeatType: "loop",
-              duration: 80,
-              ease: "easeInOut",
-              times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+              duration: 22,
+              ease: "easeInOut"
             } : { duration: 0 }}
           />
         </motion.svg>
@@ -183,58 +198,64 @@ const HeroBlobs: React.FC = () => {
       {/* Blob 3 - Apricot, bottom-left */}
       <motion.div
         className="absolute bottom-[5%] left-[10%] w-auto h-auto z-0 overflow-visible"
-        style={{ minWidth: '450px', minHeight: '450px' }}
-        initial={{ scale: 0.8, opacity: 0, x: 0, y: 0 }}
-        animate={isDesktop ? { 
+        style={{ 
+          minWidth: '450px', 
+          minHeight: '450px',
+          willChange: 'transform',
+          transform: 'translate3d(0,0,0)'
+        }}
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={!prefersReducedMotion && isDesktop ? { 
           scale: 1, 
           opacity: 0.6,
-          x: [0, 40, -50, 20, 70, 0],
-          y: [0, 30, -20, 60, 10, 0]
+          x: [0, 25, -30, 0],
+          y: [0, 20, -15, 0]
         } : { scale: 1, opacity: 0.6 }}
-        transition={isDesktop ? { 
-          duration: 2, 
-          delay: 0.6, 
+        transition={!prefersReducedMotion && isDesktop ? { 
+          duration: 1.5, 
+          delay: 0.4,
           ease: "easeOut",
           x: {
             repeat: Infinity,
             repeatType: "mirror",
-            duration: 125,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+            duration: 26,
+            ease: "easeInOut"
           },
           y: {
             repeat: Infinity,
             repeatType: "mirror",
-            duration: 135,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+            duration: 34,
+            ease: "easeInOut"
           }
-        } : { duration: 0 }}
+        } : { duration: 0.8 }}
       >
         <motion.svg
-          viewBox="-300 -300 600 600"
+          viewBox="-200 -200 400 400"
           xmlns="http://www.w3.org/2000/svg"
           width="100%"
           height="100%"
           style={{ 
             overflow: 'visible',
-            filter: "blur(6px) drop-shadow(0 0 25px rgba(255, 229, 220, 0.55))" 
+            filter: "blur(3px) drop-shadow(0 0 15px rgba(255, 229, 220, 0.4))",
+            willChange: 'transform'
           }}
         >
           <motion.path
             fill="url(#apricotGradient)"
-            d={blobPaths[2]}
-            animate={{
-              d: isDesktop ? [blobPaths[2], blobPaths[3], blobPaths[4], blobPaths[0], blobPaths[1], blobPaths[2]] : blobPaths[2],
-              rotate: isDesktop ? [0, 12, 5, 15, 3, 0] : 0,
-              scale: isDesktop ? [1, 1.14, 1.08, 1.16, 1.05, 1] : 1,
-            }}
-            transition={isDesktop ? {
+            d="M100,-65C125,-25,145,25,135,65C125,105,85,135,35,145C-15,155,-75,145,-115,115C-155,85,-175,35,-165,-15C-155,-65,-115,-115,-65,-135C-15,-155,75,-105,100,-65Z"
+            animate={!prefersReducedMotion && isDesktop ? {
+              d: [
+                "M100,-65C125,-25,145,25,135,65C125,105,85,135,35,145C-15,155,-75,145,-115,115C-155,85,-175,35,-165,-15C-155,-65,-115,-115,-65,-135C-15,-155,75,-105,100,-65Z",
+                "M115,-80C140,-40,155,10,145,50C135,90,95,120,45,130C-5,140,-65,130,-105,100C-145,70,-165,20,-155,-30C-145,-80,-105,-130,-55,-150C-5,-170,90,-120,115,-80Z",
+                "M100,-65C125,-25,145,25,135,65C125,105,85,135,35,145C-15,155,-75,145,-115,115C-155,85,-175,35,-165,-15C-155,-65,-115,-115,-65,-135C-15,-155,75,-105,100,-65Z"
+              ],
+              rotate: [0, 8, 0]
+            } : {}}
+            transition={!prefersReducedMotion && isDesktop ? {
               repeat: Infinity,
               repeatType: "loop",
-              duration: 75,
-              ease: "easeInOut",
-              times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+              duration: 24,
+              ease: "easeInOut"
             } : { duration: 0 }}
           />
         </motion.svg>
@@ -243,178 +264,196 @@ const HeroBlobs: React.FC = () => {
       {/* Blob 4 - Pale Lavender, bottom-right */}
       <motion.div
         className="absolute bottom-[2%] right-[10%] w-auto h-auto z-0 overflow-visible"
-        style={{ minWidth: '480px', minHeight: '480px' }}
-        initial={{ scale: 0.8, opacity: 0, x: 0, y: 0 }}
-        animate={isDesktop ? { 
+        style={{ 
+          minWidth: '480px', 
+          minHeight: '480px',
+          willChange: 'transform',
+          transform: 'translate3d(0,0,0)'
+        }}
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={!prefersReducedMotion && isDesktop ? { 
           scale: 1, 
           opacity: 0.6,
-          x: [0, -50, -10, -70, -30, 0],
-          y: [0, 40, -30, 10, 50, 0]
+          x: [0, -35, -10, 0],
+          y: [0, 25, -20, 0]
         } : { scale: 1, opacity: 0.6 }}
-        transition={isDesktop ? { 
-          duration: 2, 
-          delay: 0.9, 
+        transition={!prefersReducedMotion && isDesktop ? { 
+          duration: 1.5, 
+          delay: 0.6,
           ease: "easeOut",
           x: {
             repeat: Infinity,
             repeatType: "mirror",
-            duration: 140,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+            duration: 30,
+            ease: "easeInOut"
           },
           y: {
             repeat: Infinity,
             repeatType: "mirror",
-            duration: 120,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+            duration: 35,
+            ease: "easeInOut"
           }
-        } : { duration: 0 }}
+        } : { duration: 0.8 }}
       >
         <motion.svg
-          viewBox="-300 -300 600 600"
+          viewBox="-200 -200 400 400"
           xmlns="http://www.w3.org/2000/svg"
           width="100%"
           height="100%"
           style={{ 
             overflow: 'visible',
-            filter: "blur(6px) drop-shadow(0 0 25px rgba(242, 241, 255, 0.55))" 
+            filter: "blur(3px) drop-shadow(0 0 15px rgba(242, 241, 255, 0.4))",
+            willChange: 'transform'
           }}
         >
           <motion.path
             fill="url(#paleLavenderGradient)"
-            d={blobPaths[3]}
-            animate={{
-              d: isDesktop ? [blobPaths[3], blobPaths[4], blobPaths[0], blobPaths[1], blobPaths[2], blobPaths[3]] : blobPaths[3],
-              rotate: isDesktop ? [0, -10, -6, -14, -4, 0] : 0,
-              scale: isDesktop ? [1, 1.1, 1.15, 1.06, 1.12, 1] : 1,
-            }}
-            transition={isDesktop ? {
+            d="M105,-60C135,-20,155,30,145,70C135,110,95,140,45,150C-5,160,-65,150,-105,120C-145,90,-165,40,-155,-10C-145,-60,-105,-110,-55,-130C-5,-150,75,-100,105,-60Z"
+            animate={!prefersReducedMotion && isDesktop ? {
+              d: [
+                "M105,-60C135,-20,155,30,145,70C135,110,95,140,45,150C-5,160,-65,150,-105,120C-145,90,-165,40,-155,-10C-145,-60,-105,-110,-55,-130C-5,-150,75,-100,105,-60Z",
+                "M120,-75C150,-35,170,15,160,55C150,95,110,125,60,135C10,145,-50,135,-90,105C-130,75,-150,25,-140,-25C-130,-75,-90,-125,-40,-145C10,-165,90,-115,120,-75Z",
+                "M105,-60C135,-20,155,30,145,70C135,110,95,140,45,150C-5,160,-65,150,-105,120C-145,90,-165,40,-155,-10C-145,-60,-105,-110,-55,-130C-5,-150,75,-100,105,-60Z"
+              ],
+              rotate: [0, -7, 0]
+            } : {}}
+            transition={!prefersReducedMotion && isDesktop ? {
               repeat: Infinity,
               repeatType: "loop",
-              duration: 85,
-              ease: "easeInOut",
-              times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+              duration: 26,
+              ease: "easeInOut"
             } : { duration: 0 }}
           />
         </motion.svg>
       </motion.div>
 
-      {/* Blob 5 - Mittlerer Bereich links */}
+      {/* Blob 5 - Middle left */}
       <motion.div
         className="absolute top-[55%] left-[15%] w-auto h-auto z-0 overflow-visible"
-        style={{ minWidth: '500px', minHeight: '500px' }}
-        initial={{ scale: 0.8, opacity: 0, x: 0, y: 0 }}
-        animate={isDesktop ? { 
+        style={{ 
+          minWidth: '500px', 
+          minHeight: '500px',
+          willChange: 'transform',
+          transform: 'translate3d(0,0,0)'
+        }}
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={!prefersReducedMotion && isDesktop ? { 
           scale: 1, 
           opacity: 0.6,
-          x: [0, 60, -20, 40, 10, 0],
-          y: [0, -20, 30, -10, -30, 0]
+          x: [0, 35, -15, 0],
+          y: [0, -15, 20, 0]
         } : { scale: 1, opacity: 0.6 }}
-        transition={isDesktop ? { 
-          duration: 2, 
-          delay: 0.5, 
+        transition={!prefersReducedMotion && isDesktop ? { 
+          duration: 1.5, 
+          delay: 0.3,
           ease: "easeOut",
           x: {
             repeat: Infinity,
             repeatType: "mirror",
-            duration: 115,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+            duration: 27,
+            ease: "easeInOut"
           },
           y: {
             repeat: Infinity,
             repeatType: "mirror",
-            duration: 125,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+            duration: 31,
+            ease: "easeInOut"
           }
-        } : { duration: 0 }}
+        } : { duration: 0.8 }}
       >
         <motion.svg
-          viewBox="-300 -300 600 600"
+          viewBox="-200 -200 400 400"
           xmlns="http://www.w3.org/2000/svg"
           width="100%"
           height="100%"
           style={{ 
             overflow: 'visible',
-            filter: "blur(6px) drop-shadow(0 0 25px rgba(209, 207, 255, 0.55))" 
+            filter: "blur(3px) drop-shadow(0 0 15px rgba(209, 207, 255, 0.4))",
+            willChange: 'transform'
           }}
         >
           <motion.path
             fill="url(#lavenderGradient)"
-            d={blobPaths[4]}
-            animate={{
-              d: isDesktop ? [blobPaths[4], blobPaths[0], blobPaths[1], blobPaths[2], blobPaths[3], blobPaths[4]] : blobPaths[4],
-              rotate: isDesktop ? [0, 8, 15, 5, 12, 0] : 0,
-              scale: isDesktop ? [1, 1.12, 1.05, 1.14, 1.08, 1] : 1,
-            }}
-            transition={isDesktop ? {
+            d="M95,-55C125,-15,145,35,135,75C125,115,85,145,35,155C-15,165,-75,155,-115,125C-155,95,-175,45,-165,-5C-155,-55,-115,-105,-65,-125C-15,-145,65,-95,95,-55Z"
+            animate={!prefersReducedMotion && isDesktop ? {
+              d: [
+                "M95,-55C125,-15,145,35,135,75C125,115,85,145,35,155C-15,165,-75,155,-115,125C-155,95,-175,45,-165,-5C-155,-55,-115,-105,-65,-125C-15,-145,65,-95,95,-55Z",
+                "M110,-70C140,-30,160,20,150,60C140,100,100,130,50,140C0,150,-60,140,-100,110C-140,80,-160,30,-150,-20C-140,-70,-100,-120,-50,-140C0,-160,80,-110,110,-70Z",
+                "M95,-55C125,-15,145,35,135,75C125,115,85,145,35,155C-15,165,-75,155,-115,125C-155,95,-175,45,-165,-5C-155,-55,-115,-105,-65,-125C-15,-145,65,-95,95,-55Z"
+              ],
+              rotate: [0, 6, 0]
+            } : {}}
+            transition={!prefersReducedMotion && isDesktop ? {
               repeat: Infinity,
               repeatType: "loop",
-              duration: 78,
-              ease: "easeInOut",
-              times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+              duration: 23,
+              ease: "easeInOut"
             } : { duration: 0 }}
           />
         </motion.svg>
       </motion.div>
 
-      {/* Blob 6 - Mittlerer Bereich rechts */}
+      {/* Blob 6 - Middle right */}
       <motion.div
         className="absolute top-[70%] right-[12%] w-auto h-auto z-0 overflow-visible"
-        style={{ minWidth: '520px', minHeight: '520px' }}
-        initial={{ scale: 0.8, opacity: 0, x: 0, y: 0 }}
-        animate={isDesktop ? { 
+        style={{ 
+          minWidth: '520px', 
+          minHeight: '520px',
+          willChange: 'transform',
+          transform: 'translate3d(0,0,0)'
+        }}
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={!prefersReducedMotion && isDesktop ? { 
           scale: 1, 
           opacity: 0.6,
-          x: [0, -40, -15, -55, -25, 0],
-          y: [0, 25, -40, 15, 30, 0]
+          x: [0, -30, -10, 0],
+          y: [0, 18, -25, 0]
         } : { scale: 1, opacity: 0.6 }}
-        transition={isDesktop ? { 
-          duration: 2, 
-          delay: 0.7, 
+        transition={!prefersReducedMotion && isDesktop ? { 
+          duration: 1.5, 
+          delay: 0.5,
           ease: "easeOut",
           x: {
             repeat: Infinity,
             repeatType: "mirror",
-            duration: 132,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+            duration: 29,
+            ease: "easeInOut"
           },
           y: {
             repeat: Infinity,
             repeatType: "mirror",
-            duration: 118,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+            duration: 33,
+            ease: "easeInOut"
           }
-        } : { duration: 0 }}
+        } : { duration: 0.8 }}
       >
         <motion.svg
-          viewBox="-300 -300 600 600"
+          viewBox="-200 -200 400 400"
           xmlns="http://www.w3.org/2000/svg"
           width="100%"
           height="100%"
           style={{ 
             overflow: 'visible',
-            filter: "blur(6px) drop-shadow(0 0 25px rgba(255, 229, 220, 0.55))" 
+            filter: "blur(3px) drop-shadow(0 0 15px rgba(255, 229, 220, 0.4))",
+            willChange: 'transform'
           }}
         >
           <motion.path
             fill="url(#apricotGradient)"
-            d={blobPaths[3]}
-            animate={{
-              d: isDesktop ? [blobPaths[3], blobPaths[4], blobPaths[0], blobPaths[1], blobPaths[2], blobPaths[3]] : blobPaths[3],
-              rotate: isDesktop ? [0, -7, -14, -4, -9, 0] : 0,
-              scale: isDesktop ? [1, 1.08, 1.15, 1.06, 1.1, 1] : 1,
-            }}
-            transition={isDesktop ? {
+            d="M90,-50C115,-10,135,40,125,80C115,120,75,150,25,160C-25,170,-85,160,-125,130C-165,100,-185,50,-175,0C-165,-50,-125,-100,-75,-120C-25,-140,65,-90,90,-50Z"
+            animate={!prefersReducedMotion && isDesktop ? {
+              d: [
+                "M90,-50C115,-10,135,40,125,80C115,120,75,150,25,160C-25,170,-85,160,-125,130C-165,100,-185,50,-175,0C-165,-50,-125,-100,-75,-120C-25,-140,65,-90,90,-50Z",
+                "M105,-65C130,-25,150,25,140,65C130,105,90,135,40,145C-10,155,-70,145,-110,115C-150,85,-170,35,-160,-15C-150,-65,-110,-115,-60,-135C-10,-155,80,-105,105,-65Z",
+                "M90,-50C115,-10,135,40,125,80C115,120,75,150,25,160C-25,170,-85,160,-125,130C-165,100,-185,50,-175,0C-165,-50,-125,-100,-75,-120C-25,-140,65,-90,90,-50Z"
+              ],
+              rotate: [0, -5, 0]
+            } : {}}
+            transition={!prefersReducedMotion && isDesktop ? {
               repeat: Infinity,
               repeatType: "loop",
-              duration: 82,
-              ease: "easeInOut",
-              times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+              duration: 25,
+              ease: "easeInOut"
             } : { duration: 0 }}
           />
         </motion.svg>
