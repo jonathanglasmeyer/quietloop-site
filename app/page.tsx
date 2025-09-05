@@ -93,7 +93,7 @@ export default function HomePage() {
                 Hey, I'm Jonathan.
               </p>
               <p className="text-xl md:text-2xl text-gray-300 leading-relaxed mb-6">
-                Senior PM at MOIA by day, building AI-native tools by night.
+                Senior PM at <a href="https://moia.io/en" target="_blank" rel="noopener noreferrer" className="text-white hover:underline underline-offset-4">MOIA</a> by day, building AI-native tools by night.
               </p>
               <p className="text-lg text-gray-400 leading-relaxed mb-6">
                 Right now I'm hacking on some projects. I'll share them here
