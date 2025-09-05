@@ -85,7 +85,7 @@ export default function HomePage() {
       {/* Main content that grows to fill space */}
       <div className="flex-1 flex flex-col">
         {/* ───────────────── PROFESSIONAL HERO ───────────────── */}
-        <section className="px-8 py-16 flex-1 flex items-center">
+        <section className="px-8 py-8  flex-1 flex items-center">
           <div className="max-w-4xl mx-auto">
             {/* Conversational Intro */}
             <div>
@@ -105,14 +105,14 @@ export default function HomePage() {
         </section>
 
         {/* ───────────────── PROJECTS ───────────────── */}
-        <section id="products" className="px-8 p4-8 border-t border-white/10">
+        {/*<section id="products" className="px-8 pb-8">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl font-bold text-white mb-8">Projects</h2>
             <div className="border border-white/20 p-8">
               <p className="text-lg text-gray-300">Still cooking...</p>
             </div>
           </div>
-        </section>
+        </section>*/}
       </div>
 
       <Footer />
