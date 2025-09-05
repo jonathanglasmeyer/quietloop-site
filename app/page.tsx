@@ -73,7 +73,7 @@ export default function HomePage() {
               </p>
               
               <p className="text-lg md:text-xl text-foreground/70 leading-relaxed">
-              This is a portfolio of the apps and experiments I'm building solo.
+              This is a portfolio of the apps and experiments I'm building solo. More coming soon!
               </p>
               
               <a href="#products">
@@ -90,16 +90,10 @@ export default function HomePage() {
       <section id="products" className="px-6 pb-20 pt-0 relative overflow-hidden">
 
         <div className="max-w-4xl mx-auto">
-          <div className="grid gap-8 md:grid-cols-2  relative z-10 items-start">
-          <ProductCard
-            icon={Chrome}
-            title="AI Analysis for Lichess"
-            description="Chrome extension delivering intelligent chess insights and post-game analysis."
-            placeholder="Extension Screenshot"
-            accentColor="primary-vibrant"
-            link="https://chromewebstore.google.com/detail/ai-analysis-for-lichess/jempiiikmmcmijljkmhjhlmdblghmche?authuser=0&hl=en"
-          />
-         
+          <div className="text-center relative z-10">
+            <p className="text-lg text-foreground/60 fade-in-on-scroll">
+              New projects in development. Check back soon!
+            </p>
           </div>
         </div>
       </section>
