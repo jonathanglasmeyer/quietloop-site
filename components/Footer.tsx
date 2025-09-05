@@ -12,14 +12,11 @@ export default function Footer() {
             <Link href="/privacy" className="hover:bg-white hover:text-black px-2 py-1 border-2 border-transparent hover:border-white transition-all">
               PRIVACY
             </Link>
-            <Link href="/terms" className="hover:bg-white hover:text-black px-2 py-1 border-2 border-transparent hover:border-white transition-all">
-              TERMS
-            </Link>
             <Link href="/legal" className="hover:bg-white hover:text-black px-2 py-1 border-2 border-transparent hover:border-white transition-all">
               LEGAL
             </Link>
-            <a href="mailto:contact@quietloop.dev" className="hover:bg-white hover:text-black px-2 py-1 border-2 border-transparent hover:border-white transition-all">
-              CONTACT
+            <a href="https://x.com/jonathan_builds" target="_blank" rel="noopener noreferrer" className="hover:bg-white hover:text-black px-2 py-1 border-2 border-transparent hover:border-white transition-all">
+              X<span className="relative -top-1">↗</span>
             </a>
           </div>
         </div>
