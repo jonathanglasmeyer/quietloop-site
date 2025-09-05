@@ -1,102 +1,101 @@
 "use client"
 
 import type React from "react"
-
-import { useEffect, useRef } from "react"
-import HeroBlobs from "../components/HeroBlobs"
-import { Sparkles, Zap, Heart, Chrome, Github } from "lucide-react"
-import Link from "next/link"
-
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { cn } from "@/lib/utils"
+import { useEffect, useRef, useState } from "react"
+import { Sparkles, Zap, Heart, Chrome, Github, Terminal, Code, Cpu } from "lucide-react"
 import Footer from "@/components/Footer"
 
-// Custom animations werden in globals.css definiert
-
 export default function HomePage() {
-  // ——— fade-in on scroll for section content ———
-  const observerRef = useRef<IntersectionObserver | null>(null)
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 })
+  const [isLoaded, setIsLoaded] = useState(false)
 
+  // Custom cursor tracking
   useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("visible")
-        })
-      },
-      { threshold: 0.15 },
-    )
-
-    document.querySelectorAll(".fade-in-on-scroll").forEach((el) => observerRef.current?.observe(el))
-
-    return () => observerRef.current?.disconnect()
+    const handleMouseMove = (e: MouseEvent) => {
+      setCursorPos({ x: e.clientX, y: e.clientY })
+    }
+    
+    window.addEventListener('mousemove', handleMouseMove)
+    setIsLoaded(true)
+    
+    return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
   return (
-    <div
-     className="min-h-screen bg-gray-50/90 text-foreground font-sans relative overflow-hidden pb-24">
-      {/* Background blobs for the entire page */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <HeroBlobs />
-      </div>
+    <div className="min-h-screen bg-black text-white relative pb-24" style={{fontFamily: 'var(--font-space-mono)'}}>
       
-      {/* Subtiler Farbverlauf über die Hauptinhaltsbereiche */}
-      <div className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-br from-[#D1CFFF]/10 via-transparent to-[#FFE5DC]/15" />
-      
-      {/* ───────────────── Sticky Nav ───────────────── */}
-      <nav className="sticky top-0 z-50 bg-background/65 backdrop-blur border-b border-grey/30">
-        <div className="max-w-4xl mx-auto flex items-center justify-between px-6 pl-4 lg:pl-0 py-4">
-          <span className="font-serif font-bold text-xl">Quietloop</span>
+      {/* Custom Cursor - disabled */}
 
-         
+      
+      {/* ───────────────── MINIMAL NAV ───────────────── */}
+      <nav className="border-b border-white/20 bg-black">
+        <div className="max-w-4xl mx-auto px-8 py-6 relative">
+          
+          {/* Infinity positioned to align horizontally with Hey */}
+          <div className="absolute left-0 top-1/2 transform -translate-y-1/2 overflow-visible">
+            <svg width="32" height="16" viewBox="0 0 32 16" className="infinity-path overflow-visible">
+              <defs>
+                <path id="infinity-path" d="M4,8 C4,4 6,2 8,2 C10,2 12,4 16,8 C20,4 22,2 24,2 C26,2 28,4 28,8 C28,12 26,14 24,14 C22,14 20,12 16,8 C12,12 10,14 8,14 C6,14 4,12 4,8 Z"/>
+                
+                <radialGradient id="movingGlow" cx="50%" cy="50%" r="30%">
+                  <stop offset="0%" stopColor="rgba(220,220,220,0.7)"/>
+                  <stop offset="60%" stopColor="rgba(180,180,180,0.3)"/>
+                  <stop offset="100%" stopColor="rgba(255,255,255,0)"/>
+                </radialGradient>
+              </defs>
+              
+              {/* Base path */}
+              <path 
+                d="M4,8 C4,4 6,2 8,2 C10,2 12,4 16,8 C20,4 22,2 24,2 C26,2 28,4 28,8 C28,12 26,14 24,14 C22,14 20,12 16,8 C12,12 10,14 8,14 C6,14 4,12 4,8 Z" 
+                fill="none" 
+                stroke="rgba(255,255,255,0.4)" 
+                strokeWidth="1"
+              />
+              
+              {/* Subtle gray moving glow */}
+              <circle r="3" fill="url(#movingGlow)" opacity="0.7">
+                <animateMotion dur="25s" repeatCount="indefinite">
+                  <mpath href="#infinity-path"/>
+                </animateMotion>
+              </circle>
+            </svg>
+          </div>
+          
+          <span className="font-bold text-xl text-white ml-4">Quietloop</span>
         </div>
       </nav>
 
-      {/* ───────────────── Hero with About Me ───────────────── */}
-      <section className="relative z-10 px-6 py-24 pb-16 overflow-visible">
-
-        {/* hero copy */}
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <div className="flex flex-col items-start w-full">
-            <div className="flex items-center gap-6 mb-8 fade-in-on-scroll">
-              
-              
-              <h1 className="font-serif text-2xl md:text-4xl font-bold text-text-primary drop-shadow-sm">
-                Hey, I'm Jonathan.
-              </h1>
-            </div>
-            
-              <p className="text-lg md:text-xl text-foreground/70 mt-4 leading-relaxed mb-2">
-              I'm Senior PM at <a href="https://moia.io/" target="_blank" rel="noopener noreferrer" className="text-foreground/80 hover:text-foreground hover:underline">MOIA</a> by day, indie dev by night.
-              </p>
-              
-              <p className="text-lg md:text-xl text-foreground/70 leading-relaxed">
-              This is a portfolio of the apps and experiments I'm building solo. More coming soon!
-              </p>
-              
-              <a href="#products">
-               
-              </a>
-            </div>
+      {/* ───────────────── PROFESSIONAL HERO ───────────────── */}
+      <section className="px-8 py-20">
+        <div className="max-w-4xl mx-auto">
+          
+          {/* Conversational Intro */}
+          <div className="mb-16">
+            <p className="text-xl md:text-2xl text-white leading-relaxed mb-4">
+              Hey, I'm Jonathan.
+            </p>
+            <p className="text-xl md:text-2xl text-gray-300 leading-relaxed mb-6">
+              Senior PM at MOIA by day, building AI-native tools by night.
+            </p>
+            <p className="text-lg text-gray-400 leading-relaxed">
+              I spend most of my time thinking about how to make software that actually helps people get things done. 
+              Currently working on some small tools and experiments that I'll share here when they're ready.
+            </p>
           </div>
-
+          
+        </div>
       </section>
 
-    
-
-      {/* ───────────────── Things I've Built ───────────────── */}
-      <section id="products" className="px-6 pb-20 pt-0 relative overflow-hidden">
-
+      {/* ───────────────── PROJECTS ───────────────── */}
+      <section id="products" className="px-8 pb-20 border-t border-white/10 pt-20">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center relative z-10">
-            <p className="text-lg text-foreground/60 fade-in-on-scroll">
-              New projects in development. Check back soon!
-            </p>
+          <h2 className="text-2xl font-bold text-white mb-8">Projects</h2>
+          <div className="border border-white/20 p-8">
+            <p className="text-lg text-gray-300">New projects launching soon.</p>
           </div>
         </div>
       </section>
+
 
 
 
