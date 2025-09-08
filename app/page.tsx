@@ -85,7 +85,7 @@ export default function HomePage() {
       {/* Main content that grows to fill space */}
       <div className="flex-1 flex flex-col">
         {/* ───────────────── PROFESSIONAL HERO ───────────────── */}
-        <section className="px-8 py-8  flex-1 flex items-center">
+        <section className="px-8 py-16 pt-32">
           <div className="max-w-4xl mx-auto">
             {/* Conversational Intro */}
             <div>
@@ -93,26 +93,92 @@ export default function HomePage() {
                 Hey, I'm Jonathan.
               </p>
               <p className="text-xl md:text-2xl text-gray-300 leading-relaxed mb-6">
-                Senior PM at <a href="https://moia.io/en" target="_blank" rel="noopener noreferrer" className="text-white hover:underline underline-offset-4">MOIA</a> by day, building AI-native tools by night.
+                Senior PM at{" "}
+                <a
+                  href="https://moia.io/en"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white hover:underline underline-offset-4"
+                >
+                  MOIA
+                </a>{" "}
+                by day, building AI-native tools by night.
               </p>
-              <p className="text-lg text-gray-400 leading-relaxed mb-6">
+              <p className="text-lg text-gray-400 leading-relaxed">
                 Right now I'm hacking on some projects. I'll share them here
                 when they're ready.
               </p>
-              <p className="text-base text-gray-400"></p>
             </div>
           </div>
         </section>
 
-        {/* ───────────────── PROJECTS ───────────────── */}
-        {/*<section id="products" className="px-8 pb-8">
+        {/* ───────────────── GITHUB PROJECTS ───────────────── */}
+        <section id="projects" className="px-8 pt-12 pb-16">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-white mb-8">Projects</h2>
-            <div className="border border-white/20 p-8">
-              <p className="text-lg text-gray-300">Still cooking...</p>
+            <h2 className="text-2xl font-bold text-white mb-8">
+              Recent Projects
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* FluidVoice */}
+              <a
+                href="https://github.com/jonathanglasmeyer/FluidVoice"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block border border-white/20 p-6 hover:border-white/40 transition-colors cursor-pointer"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <h3 className="text-xl font-bold text-white">FluidVoice</h3>
+                  <Github className="h-4 w-4 text-gray-400 ml-auto" />
+                </div>
+                <p className="text-gray-300 mb-4">
+                  A lightweight macOS menu bar app for quick on-device audio
+                  transcription using Whisper or Parakeet v3
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-xs bg-white/10 text-white px-2 py-1 rounded">
+                    Swift
+                  </span>
+                  <span className="text-xs bg-white/10 text-white px-2 py-1 rounded">
+                    macOS
+                  </span>
+                  <span className="text-xs bg-white/10 text-white px-2 py-1 rounded">
+                    AI
+                  </span>
+                </div>
+              </a>
+
+              {/* Knowledge Vector Search */}
+              <a
+                href="https://github.com/jonathanglasmeyer/knowledge-vector-search"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block border border-white/20 p-6 hover:border-white/40 transition-colors cursor-pointer"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <h3 className="text-xl font-bold text-white">
+                    Knowledge Vector Search
+                  </h3>
+                  <Github className="h-4 w-4 text-gray-400 ml-auto" />
+                </div>
+                <p className="text-gray-300 mb-4">
+                  Vector-based search system for knowledge management and
+                  information retrieval
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-xs bg-white/10 text-white px-2 py-1 rounded">
+                    Python
+                  </span>
+                  <span className="text-xs bg-white/10 text-white px-2 py-1 rounded">
+                    Vector Search
+                  </span>
+                  <span className="text-xs bg-white/10 text-white px-2 py-1 rounded">
+                    ML
+                  </span>
+                </div>
+              </a>
             </div>
           </div>
-        </section>*/}
+        </section>
       </div>
 
       <Footer />

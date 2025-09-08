@@ -18,6 +18,9 @@ export default function Footer() {
             <a href="https://x.com/jonathan_builds" target="_blank" rel="noopener noreferrer" className="hover:bg-white hover:text-black px-2 py-1 border-2 border-transparent hover:border-white transition-all">
               X<span className="relative -top-1">↗</span>
             </a>
+            <a href="https://github.com/jonathanglasmeyer" target="_blank" rel="noopener noreferrer" className="hover:bg-white hover:text-black px-2 py-1 border-2 border-transparent hover:border-white transition-all">
+              GITHUB<span className="relative -top-1">↗</span>
+            </a>
           </div>
         </div>
         
