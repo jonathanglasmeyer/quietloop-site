@@ -41,7 +41,7 @@ export default function HomePage() {
       <nav className="border-b border-white/20 bg-black">
         <div className="max-w-4xl mx-auto px-8 py-6 relative">
           {/* Infinity positioned to align horizontally with Hey */}
-          <div className="absolute left-0 top-1/2 transform -translate-y-1/2 overflow-visible">
+          <div className="absolute left-8 lg:left-0 top-1/2 transform -translate-y-1/2 overflow-visible">
             <svg
               width="32"
               height="16"
@@ -78,7 +78,7 @@ export default function HomePage() {
             </svg>
           </div>
 
-          <span className="font-bold text-xl text-white ml-4">Quietloop</span>
+          <span className="font-bold text-xl text-white ml-10 lg:ml-4">Quietloop</span>
         </div>
       </nav>
 
