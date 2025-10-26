@@ -87,22 +87,34 @@ export default function HomePage() {
         <section className="px-8 py-12 pt-20">
           <div className="max-w-4xl mx-auto">
             {/* Conversational Intro */}
-            <div>
-              <p className="text-lg md:text-xl text-foreground leading-relaxed mb-4">
-                Hey, I'm Jonathan.
-              </p>
-              <p className="text-lg md:text-xl text-text-secondary leading-relaxed mb-6">
-                I'm a Senior PM at{" "}
-                <a
-                  href="https://moia.io/en"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-foreground hover:text-primary-hover hover:underline underline-offset-4 transition-colors"
-                >
-                  MOIA
-                </a>
-                . I also love hacking on things. See some stuff I've built below.
-              </p>
+            <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-8">
+              {/* Avatar */}
+              <div className="flex-shrink-0">
+                <img
+                  src="/images/avatar.jpg"
+                  alt="Jonathan Glasmeyer"
+                  className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-2 border-primary/20"
+                />
+              </div>
+
+              {/* Text content */}
+              <div className="flex-1">
+                <p className="text-lg md:text-xl text-foreground leading-relaxed mb-4">
+                  Hey, I'm Jonathan.
+                </p>
+                <p className="text-lg md:text-xl text-text-secondary leading-relaxed mb-6">
+                  I'm a Senior PM at{" "}
+                  <a
+                    href="https://moia.io/en"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-foreground hover:text-primary-hover hover:underline underline-offset-4 transition-colors"
+                  >
+                    MOIA
+                  </a>
+                  . I also love hacking on things. See some stuff I've built below.
+                </p>
+              </div>
             </div>
           </div>
         </section>
