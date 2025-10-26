@@ -6,9 +6,9 @@ export default function TermsPage() {
   const lastUpdated = "June 27, 2025";
 
   return (
-    <div className="min-h-screen bg-gray-50/90 text-foreground font-sans relative overflow-hidden pb-24">
+    <div className="min-h-screen bg-background text-foreground font-sans relative overflow-hidden pb-24">
       {/* Background gradient */}
-      <div className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-br from-[#D1CFFF]/10 via-transparent to-[#FFE5DC]/15" />
+      <div className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-br from-primary/5 via-transparent to-apricot/10" />
       
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-background/65 backdrop-blur border-b border-grey/30">
@@ -23,7 +23,7 @@ export default function TermsPage() {
           <h1 className="text-3xl font-serif font-bold mb-8">Terms of Service</h1>
           
           <div className="prose prose-slate">
-            <p className="text-lg text-gray-600 mb-6">Last Updated: {lastUpdated}</p>
+            <p className="text-lg text-text-muted mb-6">Last Updated: {lastUpdated}</p>
             
             <section className="mb-8">
               <h2 className="text-2xl font-serif font-medium mb-4">Product Covered</h2>

@@ -1,17 +1,12 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, Playfair_Display, JetBrains_Mono, Fira_Code, Source_Code_Pro, Space_Mono, Ubuntu_Mono, Inconsolata, Roboto_Mono, Anonymous_Pro, Courier_Prime, Noto_Sans_Mono, PT_Mono, Overpass_Mono, Share_Tech_Mono, VT323, Major_Mono_Display, Azeret_Mono, Red_Hat_Mono, Martian_Mono } from "next/font/google"
+import { Spectral, JetBrains_Mono, Fira_Code, Source_Code_Pro, Space_Mono, Ubuntu_Mono, Inconsolata, Roboto_Mono, Anonymous_Pro, Courier_Prime, Noto_Sans_Mono, PT_Mono, Overpass_Mono, Share_Tech_Mono, VT323, Major_Mono_Display, Azeret_Mono, Red_Hat_Mono, Martian_Mono } from "next/font/google"
 import "./globals.css"
 
-const inter = Inter({
+const spectral = Spectral({
   subsets: ["latin"],
-  variable: "--font-inter",
-})
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["700"],
-  variable: "--font-playfair",
+  weight: ["300", "400", "600", "700"],
+  variable: "--font-spectral",
 })
 
 const jetbrains = JetBrains_Mono({
@@ -146,7 +141,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable} ${jetbrains.variable} ${firaCode.variable} ${sourceCode.variable} ${spaceMono.variable} ${ubuntuMono.variable} ${inconsolata.variable} ${robotoMono.variable} ${anonymousPro.variable} ${courierPrime.variable} ${notoSansMono.variable} ${ptMono.variable} ${overpassMono.variable} ${shareTechMono.variable} ${vt323.variable} ${majorMonoDisplay.variable} ${azeretMono.variable} ${redHatMono.variable} ${martianMono.variable}`}>
+    <html lang="en" className={`${spectral.variable} ${jetbrains.variable} ${firaCode.variable} ${sourceCode.variable} ${spaceMono.variable} ${ubuntuMono.variable} ${inconsolata.variable} ${robotoMono.variable} ${anonymousPro.variable} ${courierPrime.variable} ${notoSansMono.variable} ${ptMono.variable} ${overpassMono.variable} ${shareTechMono.variable} ${vt323.variable} ${majorMonoDisplay.variable} ${azeretMono.variable} ${redHatMono.variable} ${martianMono.variable}`}>
       <head>
         <script
           src="https://cdn.databuddy.cc/databuddy.js"
